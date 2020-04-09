@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JS Exercise Set - 1</h2>
+
+<h3>Question 1</h3>
+<p id="que1"></p>
+
+<h3>Question 2</h3>
+<p id="que2"></p>
+
+<h3>Question 3</h3>
+<p id="que3"></p>
+
+<h3>Question 4</h3>
+<p id="que4"></p>
+
+<h3>Question 5</h3>
+
+First Name : <input type="text" id="fname" placeholder="Enter your first name"/><br><br>
+Last Name : <input type="text" id="lname" placeholder="Enter your last name"/><br><br>
+<input type="submit" id="sub" onclick="printName()"/><br><br>
+<p id="que5"></p><br><br>
+
+<script>
+//question 1
+console.log("question 1")
+function minMax(numArr) {
+	numArr.sort();	
+	console.log(numArr);
+	return [numArr[0],numArr[numArr.length - 1]];
+}
+document.getElementById("que1").innerHTML = minMax([3, 2, 1, 5, 4]);
+
+//question 2
+console.log("question 2")
+function filterArray(mixArr) {
+	console.log(mixArr);
+	var numArr = mixArr.filter(numArrFun);
+	console.log(numArr);
+	return numArr;
+}
+
+function numArrFun(value, index, array) {
+	console.log(typeof value);
+	console.log("index : "+ index +" and value :"+ value);
+	return typeof value == "number";
+}
+document.getElementById("que2").innerHTML = filterArray([1, "a", "b", 0, 15]);
+
+//question 3
+console.log("question 3")
+function getStudentNames(studentArr)
+ {
+	console.log(studentArr);
+	var nameArr = [];
+	for(var i = 0; i<studentArr.length; i++){
+		var student = studentArr[i].name;
+		nameArr[i] = student;
+	}
+	console.log(nameArr);
+	return nameArr;
+}
+document.getElementById("que3").innerHTML = getStudentNames([{ name: "Steve" },{ name: "Mike" },{ name: "John" }]);
+
+//question 4
+console.log("question 4")
+function hasKey(obj, key)
+ {
+	var status = false;
+	var nameArr = [];
+	for(k in obj){
+		if(key == k){
+			status = true;
+			break;
+		}
+	}
+	console.log(status);
+	return status;
+}
+document.getElementById("que4").innerHTML = hasKey({ a: 44, b: 45, c: 46 }, "d");
+
+//question 5
+
+function printName()
+{
+	console.log("question 5")
+	var fname = document.getElementById("fname").value;
+	var lname = document.getElementById("lname").value;
+	fname = fname.trim();
+	lname = lname.trim();
+	console.log(fname);
+	console.log(lname);
+	var fstr = fname.substr(0,1).toUpperCase();
+	var rstr = fname.substr(1,fname.length - 1);
+	var ffName = fstr + rstr;
+	fstr = lname.substr(0,1).toUpperCase();
+	rstr = lname.substr(1,lname.length - 1);
+	var flName = fstr + rstr;
+	document.getElementById("que5").innerHTML = ffName +" "+ flName;
+}
+
+</script>
+
+</body>
+</html>
