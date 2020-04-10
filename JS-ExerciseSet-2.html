@@ -193,6 +193,8 @@ function addProj(){
 		var projSBoxVal = document.getElementById("projIdSbox").innerHTML;
 		projSBoxVal += "<option value = "+p.id+">"+ p.id +"</option>";
 		document.getElementById("projIdSbox").innerHTML = projSBoxVal;
+		document.getElementById("projNameIo").value = "";
+		document.getElementById("statusBoxS").value = "status";
 	}
 	document.getElementById("addIdIoBoxDiv").style.display = "none";
 	document.getElementById("addIdButton").style.display = "block";
@@ -215,14 +217,13 @@ function updateProj(){
 
 function deleteProj(){
 	var idVal = document.getElementById("projIdSbox").value;
-	//var statusVal = document.getElementById("statusBoxS").value;
 	console.log(idVal);
 	var i = 0;
 	for( ; i < pArr.length; i++){
 		if(pArr[i].id == idVal){
 			delete pArr[i];
 			document.getElementById("pRes").innerHTML = "Project deleted successfully";
-			loadProject();
+			reloadprojIdSbox();
 			break;
 		}
 	}
@@ -231,7 +232,7 @@ function deleteProj(){
 function loadProject(){
 	console.log(document.getElementById("projIdSbox").value);
 	var projBoxValue = document.getElementById("projIdSbox").value;
-	if(projBoxVal == "projId"){
+	if(projBoxValue == "projId"){
 		document.getElementById("projNameIo").value = "";
 		document.getElementById("statusBoxS").value = "status";
 	}else{
@@ -244,6 +245,22 @@ function loadProject(){
 			}
 		}
 	}
+}
+
+function reloadprojIdSbox(){
+	pArr = pArr.filter(removeUndefined);
+	var myProjSBoxVal = "<option value='projId'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp select id &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</option>";
+	for (i = 0; i < pArr.length; i++){
+		myProjSBoxVal += "<option value = "+pArr[i].id+">"+ pArr[i].id +"</option>"
+	}
+	document.getElementById("projIdSbox").innerHTML = myProjSBoxVal;
+	document.getElementById("projNameIo").value = "";
+	document.getElementById("statusBoxS").value = "status";
+}
+
+function removeUndefined(value, index, array){
+	console.log("helloooo"+value);
+	return value != "undefined";
 }
 </script>
 
