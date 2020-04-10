@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Exercise on Control statement</h2>
+Enter a number : <br><input type = "text" onblur = "isPrime(this.value)"/><br><br>
+<input type="submit"  /><br>
+<p id="cst"></p>
+
+<h2>Exercise on Object</h2>
+Enter Id : <br><input type = "text" id = "id"/><br><br>
+Enter Name : <br><input type = "text" id = "name"/><br><br>
+Enter Description : <br><input type = "text" id = "desc"/><br><br>
+Enter status : <br><select onchange = "checkStatus()" id = "statusbox">
+						<option value="status">&nbsp&nbsp select status &nbsp&nbsp</option>
+						<option value="notStarted">not started</option>
+						<option value="inPogress">in progress</option>
+						<option value="pending">pending</option>
+						<option value="completed">completed</option>
+					</select><br>
+<p id="status"></p>
+
+<h2>Exercise on Array</h2>
+<div id = "proj">
+	Select id : <br><select onchange = "showDesc()" id = "projbox">
+						<option value="projId">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp select id &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</option>
+					</select><br><br>
+					
+	Project Name : <br><input type = "text" id = "projName"/><br><br>
+	Project Description : <br><input type = "text" id = "projDesc"/><br><br>
+</div>
+
+<h2>Exercise on Functions</h2>
+<div id = "addIdButton">
+	<input type = "submit" onclick = "addProjectId()" value = "Enter New project Id" /><br><br>
+</div>
+<div id = "addIdIoBoxDiv" style = "display : none;">
+	Enter new project id : <br><input type = "text" id = "addIdIoBox"/><br><br>
+</div>
+
+<div id = "projIdDiv">
+	Select project id : <br><select id = "projIdSbox">
+							<option value="projId">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp select id &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</option>
+						</select><br><br>
+</div>
+Project Name : <br><input type = "text" id = "projNameIo"/><br><br>
+Project status : <br><select onchange = "checkStatus()" id = "statusBoxS">
+						<option value="status">&nbsp&nbsp select status &nbsp&nbsp</option>
+						<option value="notStarted">not started</option>
+						<option value="inPogress">in progress</option>
+						<option value="pending">pending</option>
+						<option value="completed">completed</option>
+					</select><br><br>
+<input type = "button" onclick = "addProj()" value = "Add" style ="display:inline;"/>&nbsp&nbsp
+<input type = "button" onclick = "updateProj()" value = "Update" style ="display:inline;"/>&nbsp&nbsp
+<input type = "button" onclick = "deleteProj()" value = "Delete" style ="display:inline;"/>&nbsp&nbsp
+
+<p id = "pRes"></p>
+
+<script>
+//Exercise on Control statement
+function isPrime(num){
+	i = 2;
+	for(; i <= num/2; i++){
+		if(num % i == 0){
+			document.getElementById("cst").innerHTML = num +" is not prime";
+			break;
+		}
+	}
+	if(i > num/2)
+	document.getElementById("cst").innerHTML = num +" is prime";
+}
+
+//Exercise on Object
+function checkStatus(){
+	var task = new Object();
+	task.id = document.getElementById("id").value;
+	task.name = document.getElementById("name").value;
+	task.desc = document.getElementById("desc").value;
+	task.statusVal = document.getElementById("statusbox").value;
+	if(task.id == "" || task.name == "" || task.desc == ""){
+		document.getElementById("status").innerHTML = "All fields are mandatory";
+		if(task.statusVal == "status")
+			document.getElementById("status").innerHTML = "";
+	}else{
+		if(task.statusVal == "completed")
+			document.getElementById("status").innerHTML = true;
+		else if(task.statusVal == "status")
+			document.getElementById("status").innerHTML = "";
+		else
+			document.getElementById("status").innerHTML = false;
+	}
+}
+
+//Exercise on Array
+var proj1 = new Object();
+proj1.id=101;
+proj1.name = "project 1";
+proj1.description = "some description";
+
+var proj2 = new Object();
+proj2.id=102;
+proj2.name = "project 2";
+proj2.description = "some description";
+
+var proj3 = new Object();
+proj3.id=103;
+proj3.name = "project 3";
+proj3.description = "some description";
+
+var proj4 = new Object();
+proj4.id=104;
+proj4.name = "project 4";
+proj4.description = "some description";
+
+var projArr = [proj1, proj2, proj3, proj4];
+console.log(document.getElementById("projbox").innerHTML)
+var projBoxVal = document.getElementById("projbox").innerHTML;
+for (i = 0; i < projArr.length; i++){
+	projBoxVal += "<option value = "+projArr[i].id+">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+ projArr[i].id +"</option>"
+}
+console.log(projBoxVal);
+document.getElementById("projbox").innerHTML = projBoxVal;
+	
+function showDesc(){
+	console.log(document.getElementById("projbox").value);
+	var projBoxVal = document.getElementById("projbox").value;
+	if(projBoxVal == "projId"){
+		console.log("hi");
+		document.getElementById("projName").value = "";
+		document.getElementById("projDesc").value = "";
+	}else{
+		for( var i = 0; i < projArr.length; i++){
+			if(projArr[i].id == projBoxVal){
+				console.log(projArr[i].name);
+				document.getElementById("projName").value = projArr[i].name;
+				document.getElementById("projDesc").value = projArr[i].description;
+				break;
+			}
+		}
+	}
+}
+
+//Exercise on Functions
+var p1 = new Object();
+p1.id = 101;
+p1.name = "project 1";
+p1.status = "in progress";
+
+var p2 = new Object();
+p2.id = 102;
+p2.name = "project 2";
+p2.status = "in progress";
+
+var p3 = new Object();
+p3.id = 103;
+p3.name = "project 3";
+p3.status = "in progress";
+
+var pArr = [p1, p2, p3];
+
+console.log(document.getElementById("projIdSbox").innerHTML)
+var projSBoxVal = document.getElementById("projIdSbox").innerHTML;
+for (i = 0; i < pArr.length; i++){
+	projSBoxVal += "<option value = "+pArr[i].id+">"+ pArr[i].id +"</option>"
+}
+console.log(projSBoxVal);
+document.getElementById("projIdSbox").innerHTML = projSBoxVal;
+
+function addProjectId(){
+	document.getElementById("addIdButton").style.display = "none";
+	document.getElementById("addIdIoBoxDiv").style.display = "block";
+	document.getElementById("projIdDiv").style.display = "none";
+}
+
+function addProj(){
+	var addIdVal = document.getElementById("addIdIoBox").value;
+	console.log(addIdVal);
+	var i = 0;
+	for( ; i < pArr.length; i++){
+		if(pArr[i].id == addIdVal){
+			document.getElementById("pRes").innerHTML = "Project Id is already there in repository";
+			break;
+		}
+	}
+	if(i == pArr.length){
+		var p = new Object();
+		p.id = document.getElementById("addIdIoBox").value;
+		p.name = document.getElementById("projNameIo").value;
+		p.status = document.getElementById("statusBoxS").value;
+		pArr[pArr.length] = p;
+		document.getElementById("pRes").innerHTML = "Project added Successfully";
+		var projSBoxVal = document.getElementById("projIdSbox").innerHTML;
+		projSBoxVal += "<option value = "+p.id+">"+ p.id +"</option>";
+		document.getElementById("projIdSbox").innerHTML = projSBoxVal;
+	}
+	document.getElementById("addIdIoBoxDiv").style.display = "none";
+	document.getElementById("addIdButton").style.display = "block";
+	document.getElementById("projIdDiv").style.display = "block";
+}
+
+function updateProj(){
+	
+}
+
+function deleteProj(){
+	
+}
+</script>
+
+</body>
+</html>
