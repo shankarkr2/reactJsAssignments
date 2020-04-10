@@ -39,7 +39,7 @@ Enter status : <br><select onchange = "checkStatus()" id = "statusbox">
 </div>
 
 <div id = "projIdDiv">
-	Select project id : <br><select id = "projIdSbox">
+	Select project id : <br><select id = "projIdSbox" onchange = "loadProject()">
 							<option value="projId">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp select id &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</option>
 						</select><br><br>
 </div>
@@ -145,17 +145,17 @@ function showDesc(){
 var p1 = new Object();
 p1.id = 101;
 p1.name = "project 1";
-p1.status = "in progress";
+p1.status = "inPogress";
 
 var p2 = new Object();
 p2.id = 102;
 p2.name = "project 2";
-p2.status = "in progress";
+p2.status = "inPogress";
 
 var p3 = new Object();
 p3.id = 103;
 p3.name = "project 3";
-p3.status = "in progress";
+p3.status = "inPogress";
 
 var pArr = [p1, p2, p3];
 
@@ -200,11 +200,50 @@ function addProj(){
 }
 
 function updateProj(){
-	
+	var idVal = document.getElementById("projIdSbox").value;
+	var statusVal = document.getElementById("statusBoxS").value;
+	console.log(idVal);
+	var i = 0;
+	for( ; i < pArr.length; i++){
+		if(pArr[i].id == idVal){
+			pArr[i].status = statusVal;
+			document.getElementById("pRes").innerHTML = "Status updated successfully";
+			break;
+		}
+	}
 }
 
 function deleteProj(){
-	
+	var idVal = document.getElementById("projIdSbox").value;
+	//var statusVal = document.getElementById("statusBoxS").value;
+	console.log(idVal);
+	var i = 0;
+	for( ; i < pArr.length; i++){
+		if(pArr[i].id == idVal){
+			delete pArr[i];
+			document.getElementById("pRes").innerHTML = "Project deleted successfully";
+			loadProject();
+			break;
+		}
+	}
+}
+
+function loadProject(){
+	console.log(document.getElementById("projIdSbox").value);
+	var projBoxValue = document.getElementById("projIdSbox").value;
+	if(projBoxVal == "projId"){
+		document.getElementById("projNameIo").value = "";
+		document.getElementById("statusBoxS").value = "status";
+	}else{
+		for( var i = 0; i < pArr.length; i++){
+			if(pArr[i].id == projBoxValue){
+				console.log(pArr[i].name);
+				document.getElementById("projNameIo").value = pArr[i].name;
+				document.getElementById("statusBoxS").value = pArr[i].status;
+				break;
+			}
+		}
+	}
 }
 </script>
 
