@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Exercise on DOM manipulation</h2> 
+    Enter project id : <br><input type="text" id="projId"/><br><br>
+    Enter project name : <br><input type="text" id="name" /><br><br>
+    Enter project description : <br><input type="text" id="description" /><br><br>
+    Project status : <br><select  id = "status" >
+    <option value="status">&nbsp&nbsp select status &nbsp&nbsp</option>
+    <option value="notStarted">not started</option>
+    <option value="inPogress">in progress</option>
+    <option value="pending">pending</option>
+    <option value="completed">completed</option>
+</select><br><br>
+<div style="display: inline;">
+    <input type="submit" style="padding: 5px 20px 5px 20px;" onclick="saveProject()" value=" Save Projects "/>
+    <input type="submit" style="padding: 5px 20px 5px 20px;" onclick = "getProjects()" value=" View Projects "/>
+    <input type="submit" style="padding: 5px 20px 5px 20px;" onclick="getCountTR()" value=" Check "/>
+
+</div>
+<p id="domRes"></p>
+<table border="0" style="text-align: center; display: none;width: 100%;" id="projTable" >
+</table>
+
+<p id="count"></p>
+
+
+<h2>Exercise on ES6 </h2> 
+Enter the logging value : 
+<br><input type="text" style="padding: 5px 20px 5px 20px;" id="logger"/><br><br>
+<input type="submit" style="padding: 5px 20px 5px 20px;" onclick="log()" value=" log "/><br><br>
+<p id="logs"></p>
+
+See History : <br><input type="text" style="padding: 5px 20px 5px 20px;" id="historian"/><br><br>
+<input type="submit" style="padding: 5px 20px 5px 20px;" onclick="history()" value=" History "/><br><br>
+<p id="histories"></p>
+
+<input type="submit" style="padding: 5px 20px 5px 20px;" onclick="clearHistory()" value=" Clear History "/><br><br>
+<p id="cHistories"></p>
+<script>
+//Exercise on DOM manipulation
+//question 1
+var projList = [];
+function saveProject(){
+    var projId = document.getElementById("projId").value;
+    var name = document.getElementById("name").value;
+    var description = document.getElementById("description").value;
+    var status = document.getElementById("status").value;
+    if(projId != "" && name != "" && description != "" && status != "status"){
+        var project = new Object();
+        project.id = projId;
+        project.name = name;
+        project.description = description;
+        project.status = status;
+        projList[projList.length] = project;
+        document.getElementById("domRes").innerHTML = "Project saved successfully.";
+    }
+    console.log(projList);
+}
+
+function getProjects(){
+    if(projList.length > 0){
+        var projTable = document.getElementById("projTable").innerHTML;
+        projTable = projTable +"<tbody><tr><th style='padding: 5px 10px 5px 10px;''> Id </th><th style='padding: 5px 10px 5px 10px;''> Name </th><th style='padding: 5px 10px 5px 10px;'> Description </th><th style='padding: 5px 10px 5px 10px;'> Status </th></tr>"
+        
+        for(var i = 0; i < projList.length; i++){
+            projTable = projTable + "<tr>";
+                // for(let [key, value] in Object.entries(projList[i])){
+                //     //projTable = projTable+"<td>"+projList[i].projKey+"</td>";
+                //     console.log(key+"  "+value);
+                //     projTable =  projTable+"<td>"+value+"</td>";
+                // }
+           projTable += "<td>"+projList[i].id+"</td><td>"+projList[i].name+"</td><td>"+projList[i].description+"</td><td>"+projList[i].status+"</td>"
+            projTable = projTable + "</tr>";
+        }
+        projTable = projTable + "</tbody>";
+        document.getElementById("projTable").innerHTML = projTable;
+        document.getElementById("projTable").style.display = "block";
+        console.log(projTable);
+    }
+}
+
+function getCountTR(){
+    var rowCount = document.getElementById("projTable").rows.length ;
+    var projectCount = projList.length ;
+    console.log("row count"+rowCount)
+    if(rowCount == projectCount){
+        document.getElementById("count").innerHTML = "the number of tr tag and project is same";
+    }else{
+        document.getElementById("count").innerHTML = "the number of tr tag and project is not same";
+    }
+}
+
+//Exercise on ES6 
+var logList = [];
+function log(){
+    var logger = document.getElementById("logger").value;
+    if(logger != ""){
+        logList[logList.length] = logger;
+    }
+    console.log(logList);
+    document.getElementById("logs").innerHTML = logger;
+}
+
+function history(){
+    var historyValue = document.getElementById("historian").value;
+    if(historyValue == ""){
+        logList.forEach(element => {
+            document.getElementById("histories").innerHTML += element+"<br>"
+        });
+    }else{
+        const reduceLogList = logList.filter((value, index, array)=> {
+            console.log(index+"  "+ historyValue);
+            return index < historyValue;
+        });
+        console.log(reduceLogList);
+        reduceLogList.forEach(element => {
+            document.getElementById("histories").innerHTML += element+"<br>"
+        });
+    }
+
+}
+
+function clearHistory(){
+    logList =[];
+    document.getElementById("cHistories").innerHTML = true;
+}
+</script>
+
+</body>
+</html>
